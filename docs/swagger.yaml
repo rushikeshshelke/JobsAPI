@@ -1,0 +1,241 @@
+openapi: 3.0.0
+info:
+  title: Job Search API
+  description: This is Job Search API.
+  contact: {}
+  version: "1.0"
+servers:
+  - url: http://127.0.0.1:3000/api/v1
+    description: ""
+    variables: {}
+paths:
+  /:
+    get:
+      tags:
+        - Job
+      summary: "Get jobs."
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /job:
+    post:
+      tags:
+        - Job
+      summary: "Create job."
+      parameters: []
+      requestBody:
+        description: "Create job."
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/jobrequest"
+                - example:
+                    company: Infosys
+                    position: Senior Systems Engineer
+            example:
+              company: Infosys
+              position: Senior Systems Engineer
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /job/{jobId}:
+    get:
+      tags:
+        - Job
+      summary: "Get job by job id."
+      parameters:
+        - name: jobId
+          in: path
+          description: "Get job by job id."
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+    patch:
+      tags:
+        - Job
+      summary: job:jobId
+      parameters:
+        - name: jobId
+          in: path
+          description: ""
+          required: true
+          style: simple
+          schema:
+            type: string
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/jobjobIdRequest"
+                - example:
+                    status: interview
+            example:
+              status: interview
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Job
+      summary: "Delete job by id."
+      parameters:
+        - name: jobId
+          in: path
+          description: "Delete job by job id."
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /user/signup:
+    post:
+      tags:
+        - User
+      summary: "Register user."
+      parameters: []
+      requestBody:
+        description: "Register user."
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/signuprequest"
+                - example:
+                    name: smith
+                    email: smith@example.com
+                    password: "12345678"
+            example:
+              name: smith
+              email: smith@example.com
+              password: "12345678"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: "Login user."
+      parameters: []
+      requestBody:
+        description: "Login user."
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/loginrequest"
+                - example:
+                    email: smith@example.com
+                    password: "12345678"
+            example:
+              email: smith@example.com
+              password: "12345678"
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    jobrequest:
+      title: jobrequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: Infosys
+        position: Senior Systems Engineer
+    jobjobIdRequest:
+      title: jobjobIdRequest
+      required:
+        - status
+      type: object
+      properties:
+        status:
+          type: string
+      example:
+        status: interview
+    signuprequest:
+      title: signuprequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: smith
+        email: john@example.com
+        password: "12345698"
+    loginrequest:
+      title: loginrequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: john@example.com
+        password: "12345698"
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Job
+    description: "Everything related to job."
+  - name: User
+    description: "Everything related to user."
